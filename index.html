@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="潮州、汕头与揭阳机场旅行地图：24个景点、酒店、会合地点、车站和汕头大学，比较距离并查看实景与攻略。">
+  <meta name="description" content="10月4至7日潮汕旅行手账：凤凰天池与乌岽茶山、黄冈叙旧、独自乘车去汕头大学桑浦山。按日期查看安排、比较距离、打开导航。">
   <meta name="robots" content="noindex, nofollow">
-  <title>20261004-20261007地图概览</title>
+  <title>山里喝茶，黄冈叙旧 · 潮汕旅行手账</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231e5e52'/%3E%3Cpath d='M10 15l10-4 9 4 9-4v24l-9 4-9-4-10 4z' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M20 11v24m9-20v24' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/vendor/leaflet.css">
   <link rel="stylesheet" href="styles.css">
@@ -17,28 +17,33 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="./" aria-label="返回地图概览"><span class="brand-mark" aria-hidden="true">汕</span><div><h1>20261004-20261007地图概览</h1><p>潮州 · 汕头 · 揭阳机场</p></div></a>
-    <div class="header-right"><span class="local-label"><i></i>旅行地图</span><button id="aboutButton" class="quiet">资料说明</button></div>
+    <a class="brand" href="./" aria-label="返回旅行手账"><span class="brand-mark" aria-hidden="true">茶</span><div><h1>潮汕 · 这一程</h1><p>2026 / 10 / 04 — 10 / 07</p></div></a>
+    <div class="header-right"><a class="download-link" href="pdf/phoenix-guide.pdf" target="_blank" rel="noopener">凤凰攻略 PDF ↗</a><a class="download-link" href="pdf/travel-notes.pdf" target="_blank" rel="noopener">行程手账 PDF ↗</a><button id="aboutButton" class="quiet">资料说明</button></div>
   </header>
+  <section class="journey" aria-label="按日期查看行程">
+    <div class="scene-tabs" id="sceneTabs" role="group" aria-label="日期与行程场景"></div>
+    <div id="sceneSummary" class="scene-summary" aria-live="polite"></div>
+  </section>
   <main class="workspace">
     <aside class="places-panel" aria-label="地点列表">
-      <div class="places-heading"><h2>这次要去的地方</h2><span id="placeCount"></span></div>
+      <div class="places-heading"><h2>这一页的地点</h2><span id="placeCount"></span></div>
       <label class="search-wrap"><span class="sr-only">搜索地点</span><input type="search" id="search" placeholder="搜索景点、酒店、车站…" autocomplete="off"></label>
       <div class="filters" role="group" aria-label="地点类型">
         <button data-filter="all" aria-pressed="true">全部</button><button data-filter="attraction" aria-pressed="false">景点</button><button data-filter="hotel" aria-pressed="false">住宿</button><button data-filter="special" aria-pressed="false">特别地点</button>
       </div>
       <div id="placesList" class="places-list"></div>
-      <div class="list-footer">景点编号沿用原攻略推荐顺序</div>
+      <div class="list-footer">点地点看攻略 · 点日期看当天安排</div>
     </aside>
     <section class="map-panel" aria-label="潮汕地图及距离比较">
-      <div class="map-toolbar"><div class="view-tabs" role="group" aria-label="地图范围"><button data-view="trip" aria-pressed="true">行程全览</button><button data-view="region" aria-pressed="false">地图范围</button><button data-view="oldcity" aria-pressed="false">潮州古城</button><button data-view="huanggang" aria-pressed="false">饶平黄冈</button></div><span class="map-hint">点击图钉查看详情</span></div>
-      <div id="map" aria-label="可缩放的潮州、汕头与揭阳机场旅行地图"></div>
-      <div class="map-legend"><span><i class="dot attraction"></i>景点编号</span><span><i class="dot hotel"></i>酒店</span><span><i class="dot special"></i>特别地点</span><span>空心圆：地点数量</span><span class="legend-line">实线：公路　虚线：直线</span></div>
+      <div class="map-toolbar"><div class="view-tabs" role="group" aria-label="地图范围"><button data-view="trip" aria-pressed="true">本页地点</button><button data-view="phoenix" aria-pressed="false">凤凰山线</button><button data-view="huanggang" aria-pressed="false">黄冈附近</button><button data-view="south" aria-pressed="false">去桑浦山</button></div><span class="map-hint">图钉可点 · 茶山不是停车点</span></div>
+      <div id="map" aria-label="可缩放的凤凰、黄冈与汕头旅行地图"></div>
+      <div class="map-legend"><span><i class="dot attraction"></i>散步与风景</span><span><i class="dot hotel"></i>住宿</span><span><i class="dot special"></i>会合与交通</span><span>空心圆：地点数量</span><span class="legend-line">实线：公路　虚线：直线</span></div>
       <section class="distance-panel" aria-labelledby="distanceHeading">
         <div class="distance-top"><h2 id="distanceHeading">两点之间</h2><span id="routeState">选择起点与终点</span></div>
         <div class="route-inputs"><label><span>起点</span><select id="origin" aria-label="距离起点"></select></label><button id="swap" class="swap" aria-label="交换起点终点">⇄</button><label><span>终点</span><select id="destination" aria-label="距离终点"></select></label><button id="compare" class="primary">比较距离</button></div>
         <div id="distanceResult" class="distance-result" aria-live="polite"></div>
         <p id="routeNote" class="route-note"></p>
+        <a id="routeNavigation" class="route-navigation" target="_blank" rel="noopener noreferrer">去高德查终点与导航 ↗</a>
         <div class="route-actions"><button id="pickStart" class="text-button">地图选起点</button><button id="pickEnd" class="text-button">地图选终点</button><button id="fitRoute" class="text-button">查看连线</button></div>
       </section>
       <div id="mapNotice" role="status" hidden></div>
@@ -46,11 +51,11 @@
     <aside id="detailPanel" class="detail-panel" aria-label="地点详情"></aside>
   </main>
   <dialog id="aboutDialog"><div class="dialog-top"><h2>资料与地图说明</h2><button id="closeAbout" class="quiet" aria-label="关闭资料说明">关闭</button></div><div class="about-body">
-    <p>资料核查日期：<strong>2026 年 10 月 2 日</strong>。景点排名是本次行程的推荐顺序，游玩时间为规划建议。</p>
+    <p>行程更新日期：<strong>2026 年 10 月 3 日</strong>。日期按钮对应本次确认的行程，停留时间为建议；6 日晚住宿与 6／7 日离开时段仍待决定。</p>
     <p>公路距离来自 OpenStreetMap / OSRM 的驾车路网估算，不含实时拥堵、收费、国庆临时封路。位置采用公开坐标代表点，实际停车入口可能不同。虚线只表示直线距离，不能用作驾车或步行路线。</p>
-    <p>地图保留潮州、汕头，揭阳仅显示潮汕机场及连接区域。连接区域是方便看路的展示范围，不是行政边界。行政边界用于辨认区域，不作测绘用途。湖山家仅标猪哥溪片区估点，未精确到门牌。</p>
-    <p>实景照片和票务资料均附来源。本站展示可确认开放许可的照片，其余提供原始实景链接；历史或未核实价格单独标注。照片作者及许可见地点详情。</p>
-    <p>学校公众入校、船班、山路及景区票种，以当日官方安排为准。酒店金额和取消期限来自用户订单截图，未复制订单号与入住凭证。</p>
+    <p>地图显示潮州、汕头行政范围，用于辨认区域，不作测绘用途。朋友家仅标猪哥溪片区估点，不公开门牌。天池与乌岽为风景/片区代表点，不提供到山顶图钉的驾车估算。</p>
+    <p>本站展示可确认开放许可的照片，其余提供实景出处；作者及许可见地点详情。山路、索道、门票与入校规则分别注明核查状态。</p>
+    <p>“去导航”打开高德公开关键词搜索，请核对实际入口并在高德内开始导航。本站没有接入新的地图 API、实时路况或 12306 余票。铁路行程需另查车次，静态公路距离不能当作火车时长。</p>
     <div class="source-links"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a><a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">OSRM</a><a href="https://datav.aliyun.com/portal/school/atlas/area_selector" target="_blank" rel="noopener noreferrer">DataV 行政边界</a><a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" target="_blank" rel="noopener noreferrer">Esri 底图</a></div>
   </div></dialog>
   <noscript>此地图需要启用 JavaScript 才能查看地点和比较距离。</noscript>
